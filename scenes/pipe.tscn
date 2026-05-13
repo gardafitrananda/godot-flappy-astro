@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://bpp4fywg38fcx"]
+
+[ext_resource type="Script" uid="uid://dlun0dr5yk1on" path="res://scripts/pipe.gd" id="1_arpqm"]
+[ext_resource type="Texture2D" uid="uid://ch488tbu2b1g" path="res://assets/pipe.png" id="2_8p0di"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejsh2"]
+size = Vector2(49, 41.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ybk5"]
+size = Vector2(119.875, 527.15625)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tdldm"]
+size = Vector2(61.125, 51.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ss4sx"]
+size = Vector2(153.5625, 516.625)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arpqm"]
+size = Vector2(23, 303)
+
+[node name="Pipe" type="Area2D" unique_id=774799353 groups=["pipes"]]
+script = ExtResource("1_arpqm")
+
+[node name="Lower" type="Sprite2D" parent="." unique_id=585402289]
+position = Vector2(113, -664)
+scale = Vector2(2.0701382, 3.349241)
+texture = ExtResource("2_8p0di")
+offset = Vector2(0, 380)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=160872291]
+position = Vector2(102.5, 352.75)
+shape = SubResource("RectangleShape2D_ejsh2")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=236598335]
+position = Vector2(109.9375, 635.5781)
+shape = SubResource("RectangleShape2D_4ybk5")
+
+[node name="Upper" type="Sprite2D" parent="." unique_id=1241938602]
+position = Vector2(120, 900.724)
+scale = Vector2(2.0232499, 3.266871)
+texture = ExtResource("2_8p0di")
+offset = Vector2(0, -380)
+flip_v = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="." unique_id=376447317]
+position = Vector2(114, -96)
+shape = SubResource("RectangleShape2D_tdldm")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="." unique_id=450846386]
+position = Vector2(117.21875, -365)
+shape = SubResource("RectangleShape2D_ss4sx")
+
+[node name="ScoreArea" type="Area2D" parent="." unique_id=827330923]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreArea" unique_id=30427951]
+position = Vector2(112.5, 118.5)
+shape = SubResource("RectangleShape2D_arpqm")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="ScoreArea" to="." method="_on_score_area_body_entered"]

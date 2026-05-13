@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://cx7atb6pdhegx"]
+
+[ext_resource type="Texture2D" uid="uid://bmge8txprsxb" path="res://assets/bg.png" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://dkw478adi1wo1" path="res://scripts/main.gd" id="1_sugp2"]
+[ext_resource type="PackedScene" uid="uid://bpp4fywg38fcx" path="res://scenes/pipe.tscn" id="2_tefeu"]
+[ext_resource type="PackedScene" uid="uid://b45ajo0h4ad6m" path="res://scenes/bird.tscn" id="3_jyhfs"]
+[ext_resource type="Script" uid="uid://4dssvxu7g6u0" path="res://scripts/bird.gd" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://dtb7lew8io66s" path="res://scenes/ground.tscn" id="5_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://be0dah0h816aq" path="res://scenes/game_over.tscn" id="7_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://dnj0wqbfbrhal" path="res://assets/ground.png" id="8_tipki"]
+[ext_resource type="AudioStream" uid="uid://dtopsw768kyv2" path="res://assets/Jump.wav" id="9_85g3d"]
+[ext_resource type="AudioStream" uid="uid://d23olib78k06p" path="res://assets/Astral.mp3" id="10_choun"]
+[ext_resource type="AudioStream" uid="uid://5a1ey1pusqxs" path="res://assets/crash.mp3" id="11_ya4ey"]
+
+[node name="Main" type="Node" unique_id=1123019915]
+script = ExtResource("1_sugp2")
+pipe_scene = ExtResource("2_tefeu")
+
+[node name="Bird" parent="." unique_id=1584796176 instance=ExtResource("3_jyhfs")]
+position = Vector2(6, 3)
+script = ExtResource("4_jyhfs")
+
+[node name="Ground" parent="." unique_id=785409035 instance=ExtResource("5_tbgi4")]
+z_index = 1
+position = Vector2(-3, 876)
+
+[node name="PipeTimer" type="Timer" parent="." unique_id=345699450]
+wait_time = 1.5
+
+[node name="Score" type="Label" parent="." unique_id=379397593]
+z_index = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -36.5
+offset_right = 36.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "SCORE : 0"
+
+[node name="GameOver" parent="." unique_id=1770489625 instance=ExtResource("7_o6xl0")]
+
+[node name="LivesContainer" type="HBoxContainer" parent="." unique_id=591854968]
+z_index = 101
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.021000002
+anchor_right = 0.23400001
+anchor_bottom = 0.043
+offset_left = 14.623999
+offset_top = -10.656002
+offset_right = -8.17601
+offset_bottom = 3.751999
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=562724582]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=408012297]
+motion_mirroring = Vector2(1735, 1)
+
+[node name="Bg" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=960156408]
+position = Vector2(869, 474.00003)
+scale = Vector2(1.2342377, 1.2291666)
+texture = ExtResource("1_o5qli")
+
+[node name="GroundParallax" type="ParallaxBackground" parent="." unique_id=1209846857]
+layer = 10
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="GroundParallax" unique_id=487590192]
+motion_mirroring = Vector2(854, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="GroundParallax/ParallaxLayer" unique_id=1449884928]
+position = Vector2(424.99997, 791)
+scale = Vector2(1.0671036, 1)
+texture = ExtResource("8_tipki")
+
+[node name="Sprite2D2" type="Sprite2D" parent="GroundParallax/ParallaxLayer" unique_id=726050908]
+position = Vector2(419.99997, -30)
+scale = Vector2(1.0671036, 1)
+texture = ExtResource("8_tipki")
+flip_v = true
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="." unique_id=780471681]
+stream = ExtResource("9_85g3d")
+volume_db = 3.0
+
+[node name="BGM" type="AudioStreamPlayer2D" parent="." unique_id=110436882]
+stream = ExtResource("10_choun")
+volume_db = 5.0
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="." unique_id=502074463]
+stream = ExtResource("11_ya4ey")
+
+[connection signal="hit" from="Ground" to="." method="_on_ground_hit"]
+[connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
+[connection signal="restart" from="GameOver" to="." method="_on_game_over_restart"]
